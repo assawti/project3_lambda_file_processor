@@ -10,7 +10,7 @@ provider "aws" {
 
 # S3 Bucket for uploads
 resource "aws_s3_bucket" "upload_bucket" {
-  bucket = "assawti-lambda-upload-bucket-2025"
+  bucket        = "assawti-lambda-upload-bucket-2025"
   force_destroy = true
 }
 
@@ -38,12 +38,12 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
 
 # Lambda function
 resource "aws_lambda_function" "file_processor" {
-  filename         = "${path.module}/lambda_function.zip"
+  filename         = "${path.module}/../lambda_function.zip"
   function_name    = "fileProcessorLambda"
   role             = aws_iam_role.lambda_exec.arn
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.9"
-  source_code_hash = filebase64sha256("${path.module}/lambda_function.zip")
+  source_code_hash = filebase64sha256("${path.module}/../lambda_function.zip")
   timeout          = 10
 }
 
@@ -126,4 +126,3 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 output "api_url" {
   value = "https://${aws_api_gateway_rest_api.api.id}.execute-api.${var.region}.amazonaws.com/${aws_api_gateway_stage.api_stage.stage_name}/"
 }
-
