@@ -3,7 +3,7 @@ name: Deploy Lambda to AWS
 on:
   push:
     branches:
-      - main  # Or your default branch name
+      - dev  # Or your default branch name
 
 jobs:
   deploy:
